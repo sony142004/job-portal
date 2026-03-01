@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="layout-grid">
+    <!-- 
+        Step 1: Left Column - Displaying the List of All Jobs.
+        We loop through the 'jobs' list sent from the view.
+    -->
+    <div class="jobs-list-container">
+        <div class="list-header">
+            <!-- Show count of combined jobs -->
+            <h3>Jobs Found <span class="jobs-count">{{ jobs|length }}</span></h3>
+            <div class="sort-by">
+                Sort by: <strong>Default</strong>
+            </div>
+        </div>
+
+        <div class="jobs-list">
+            <!-- Loop through every job in our list -->
+            {% for job in jobs %}
+            <div class="job-card {% if selected_job.id == job.id %}active{% endif %}">
+                <div class="job-card-header">
+                    <!-- Display Logo: Check if it's Infosys for special styling, otherwise use color bubble -->
+                    <div class="job-logo" {% if not 'infosys' in job.company|lower
+                        %}style="background-color: {{ job.logo_color|default:'#ddd' }};" {% endif %}>
+                        {% if 'infosys' in job.company|lower %}
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg"
+                            alt="Infosys Logo">
+                        {% endif %}
+                    </div>
+                    <div class="job-title-group">
+                        <h4 class="job-title">{{ job.title }}</h4>
+                        <!-- Display Company Name -->
+                        <p class="job-company">{{ job.company }}</p>
+                    </div>
+                    <button class="btn-save">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                        </svg> Save
+                    </button>
+                </div>
+
+                <div class="job-meta">
+                    <span class="match-badge">Profile Match</span>
+                    <!-- Show how long ago it was posted -->
+                    <span class="post-time">{{ job.time_ago }}</span>
+                </div>
+
+                <!-- Job Tags like 'Full Time' or 'Remote' -->
+                <div class="job-tags">
+                    <span class="tag tag-default">{{ job.job_type }}</span>
+                    <span class="tag tag-remote">{{ job.work_setup }}</span>
+                    <span class="tag tag-senior">{{ job.level }}</span>
+                </div>
+            </div>
+            {% empty %}
+            <!-- This runs if the 'jobs' list is empty -->
+            <p>No jobs available at the moment.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- 
+        Step 2: Right Column - Displaying Details of the First (Selected) Job.
+    -->
+    <div class="job-details-container">
+        {% if selected_job %}
+        <div class="job-details-card">
+            <div class="details-header">
+                <div class="job-logo" {% if not 'infosys' in selected_job.company|lower
+                    %}style="background-color: {{ selected_job.logo_color|default:'#ddd' }};" {% endif %}>
+                    {% if 'infosys' in selected_job.company|lower %}
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys Logo">
+                    {% endif %}
+                </div>
+                <h2>{{ selected_job.title }}</h2>
+                <button class="btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="1" />
+                        <circle cx="12" cy="5" r="1" />
+                        <circle cx="12" cy="19" r="1" />
+                    </svg>
+                </button>
+            </div>
+
+            <p class="details-subtitle">
+                {{ selected_job.company }} · {{ selected_job.location }} · {{ selected_job.time_ago }}
+            </p>
+
+            <!-- Detailed Job list (Salary, Skills, etc.) -->
+            <ul class="details-list">
+                <li><strong>Type:</strong> {{ selected_job.job_type }} · {{ selected_job.level }}</li>
+                <li><strong>Industry:</strong> {{ selected_job.industry|default:"General" }}</li>
+                <li><strong>Salary:</strong> {{ selected_job.salary_range }}</li>
+                <li><strong>Skills:</strong> {{ selected_job.skills|default:"Not specified" }}</li>
+            </ul>
+
+            <div class="action-buttons">
+                <button class="btn-primary">Apply Now</button>
+                <button class="btn-secondary">Save Job</button>
+            </div>
+
+            <!-- Description fields -->
+            <div class="job-description-content">
+                <h3>About the job</h3>
+                <p>{{ selected_job.description }}</p>
+
+                <h3>The Role</h3>
+                <p>{{ selected_job.role_description }}</p>
+            </div>
+        </div>
+        {% else %}
+        <p>Select a job to see the full details here.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
