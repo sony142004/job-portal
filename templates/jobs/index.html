@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+﻿{% extends 'base.html' %}
 
 {% block content %}
 <div class="layout-grid">
@@ -21,11 +21,9 @@
             <div class="job-card {% if selected_job.id == job.id %}active{% endif %}">
                 <div class="job-card-header">
                     <!-- Display Logo: Check if it's Infosys for special styling, otherwise use color bubble -->
-                    <div class="job-logo" {% if not 'infosys' in job.company|lower
-                        %}style="background-color: {{ job.logo_color|default:'#ddd' }};" {% endif %}>
+                    <div class="job-logo" {% if not 'infosys' in job.company|lower %}style="background-color: {{ job.logo_color|default:'#ddd' }};"{% endif %}>
                         {% if 'infosys' in job.company|lower %}
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg"
-                            alt="Infosys Logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys Logo">
                         {% endif %}
                     </div>
                     <div class="job-title-group">
@@ -34,10 +32,9 @@
                         <p class="job-company">{{ job.company }}</p>
                     </div>
                     <button class="btn-save">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                        </svg> Save
+                        </svg> Save 
                     </button>
                 </div>
 
@@ -68,8 +65,7 @@
         {% if selected_job %}
         <div class="job-details-card">
             <div class="details-header">
-                <div class="job-logo" {% if not 'infosys' in selected_job.company|lower
-                    %}style="background-color: {{ selected_job.logo_color|default:'#ddd' }};" {% endif %}>
+                <div class="job-logo" {% if not 'infosys' in selected_job.company|lower %}style="background-color: {{ selected_job.logo_color|default:'#ddd' }};"{% endif %}>
                     {% if 'infosys' in selected_job.company|lower %}
                     <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Infosys_logo.svg" alt="Infosys Logo">
                     {% endif %}
@@ -77,13 +73,11 @@
                 <h2>{{ selected_job.title }}</h2>
                 <button class="btn-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="1" />
-                        <circle cx="12" cy="5" r="1" />
-                        <circle cx="12" cy="19" r="1" />
+                        <circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" />
                     </svg>
                 </button>
             </div>
-
+            
             <p class="details-subtitle">
                 {{ selected_job.company }} · {{ selected_job.location }} · {{ selected_job.time_ago }}
             </p>

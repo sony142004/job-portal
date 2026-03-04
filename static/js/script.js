@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Add micro-animations and interactions
-    
+
     // Clear search form
     const btnClear = document.querySelector('.btn-clear');
     if (btnClear) {
@@ -15,10 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
         card.addEventListener('click', (e) => {
             // Prevent if clicking on save button
             if (e.target.closest('.btn-save')) return;
-            
+
             jobCards.forEach(c => c.classList.remove('active'));
             card.classList.add('active');
-            
+
             // In a real application, clicking a card would fetch the job details
             // through AJAX or a full page reload.
             // For now, we will add brief visual feedback:
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         detailCard.style.opacity = '0';
         detailCard.style.transform = 'translateY(20px)';
         detailCard.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
-        
+
         requestAnimationFrame(() => {
             setTimeout(() => {
                 detailCard.style.opacity = '1';
@@ -56,4 +56,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 200);
         });
     });
+
+    // Login Modal Logic
+    const modal = document.getElementById('loginModal');
+    const closeBtn = document.querySelector('.close-modal');
+
+    if (modal) {
+        // Use event delegation for Apply buttons
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('.btn-primary') || e.target.closest('.btn-primary')) {
+                e.preventDefault();
+                console.log('Apply button clicked!');
+                modal.style.display = 'block';
+            }
+        });
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        }
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+    }
 });
